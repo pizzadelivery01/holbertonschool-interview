@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """
-lockboxes algorithim to check if all boxs can be opened from first box with keys
+lockboxes algo to check if all boxs can be opened from first box with keys
 """
 
 
 def canUnlockAll(boxes):
-    """ 
-    checks if all boxes can be unlocked 
+    """
+    checks if all boxes can be unlocked
     by calling function to get collectable keys
     then compare to amount of boxes
     """
@@ -20,12 +20,15 @@ def canUnlockAll(boxes):
             return True
         else:
             return False
-    
+
     else:
         return False
 
 
 def getKeys(boxes, keys, key=0):
+    """
+    recursivly searches boxes for all collectable keys
+    """
     for each in boxes[key]:
         if each not in keys and each < len(boxes):
             keys.append(each)
