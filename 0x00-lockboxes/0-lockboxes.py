@@ -18,6 +18,8 @@ def canUnlockAll(boxes):
 
         if sorted(keys) == needed:
             return True
+        else:
+            return False
     
     else:
         return False
