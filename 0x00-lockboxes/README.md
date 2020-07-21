@@ -1,0 +1,1 @@
+first interview algorithim of specializations
