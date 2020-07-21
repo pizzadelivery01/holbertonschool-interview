@@ -16,7 +16,7 @@ def canUnlockAll(boxes):
 
         getKeys(boxes, keys)
 
-        if sorted(keys) == needed:
+        if keys.sorted() == needed:
             return True
         else:
             return False
