@@ -11,7 +11,7 @@ def canUnlockAll(boxes):
     then compare to amount of boxes
     """
     if boxes:
-        keys = [0]
+        keys = set([0])
         getKeys(boxes, keys)
 
         if len(keys) == len(boxes):
@@ -31,5 +31,5 @@ def getKeys(boxes, keys, key=0):
         if each is None:
             continue
         if each not in keys and each < len(boxes):
-            keys.append(each)
+            keys.add(each)
             getKeys(boxes, keys, each)
