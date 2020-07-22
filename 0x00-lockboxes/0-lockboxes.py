@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 """
-lockboxes algo to check if all boxs can be opened from first box with keys
+lockbox algo
 """
 
 
 def canUnlockAll(boxes):
     """
-    Return True if all boxes open
+    return true if all boxes open
     """
     boxlist = [boxes[0]]
-    boxesleft = [range(1, len(boxes))]
+    boxesleft = set(range(1, len(boxes)))
     while (len(boxlist) > 0):
         for i in boxlist:
             for j in i:
