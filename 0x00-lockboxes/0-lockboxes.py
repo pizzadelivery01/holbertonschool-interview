@@ -6,30 +6,18 @@ lockboxes algo to check if all boxs can be opened from first box with keys
 
 def canUnlockAll(boxes):
     """
-    checks if all boxes can be unlocked
-    by calling function to get collectable keys
-    then compare to amount of boxes
+    Return True if all boxes open
     """
-    if boxes:
-        keys = set([0])
-        getKeys(boxes, keys)
+    boxlist = [boxes[0]]
+    boxesleft = [range(1, len(boxes))]
+    while (len(boxlist) > 0):
+        for i in boxlist:
+            for j in i:
+                if j in boxesleft:
+                    boxlist.append(boxes[j])
+                    boxesleft.remove(j)
+                if len(boxesleft) == 0:
+                    return True
+        boxlist.pop(0)
 
-        if len(keys) == len(boxes):
-            return True
-        else:
-            return False
-
-    else:
-        return True
-
-
-def getKeys(boxes, keys, key=0):
-    """
-    recursivly searches boxes for all collectable keys
-    """
-    for each in boxes[key]:
-        if each is None:
-            continue
-        if each not in keys and each < len(boxes):
-            keys.add(each)
-            getKeys(boxes, keys, each)
+    return False
