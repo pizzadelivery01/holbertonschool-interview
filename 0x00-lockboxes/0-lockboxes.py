@@ -10,7 +10,7 @@ def canUnlockAll(boxes):
     by calling function to get collectable keys
     then compare to amount of boxes
     """
-    if boxes:
+    if boxes != []:
         keys = [0]
         needed = [i[0] for i in enumerate(boxes)]
 
