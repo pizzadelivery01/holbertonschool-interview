@@ -11,7 +11,7 @@ def canUnlockAll(boxes):
     then compare to amount of boxes
     """
     if boxes != []:
-        keys = set([0])
+        keys = [0]
         needed = [i[0] for i in enumerate(boxes)]
 
         getKeys(boxes, keys)
