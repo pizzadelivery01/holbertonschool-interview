@@ -12,11 +12,9 @@ def canUnlockAll(boxes):
     """
     if boxes:
         keys = [0]
-        needed = [i[0] for i in enumerate(boxes)]
-
         getKeys(boxes, keys)
 
-        if len(keys) == len(needed):
+        if len(keys) == len(boxes):
             return True
         else:
             return False
