@@ -29,8 +29,9 @@ def getKeys(boxes, keys, key=0):
     """
     recursivly searches boxes for all collectable keys
     """
-    if boxes[key] is not None:
-        for each in boxes[key]:
-            if each not in keys and each < len(boxes):
-                keys.append(each)
-                getKeys(boxes, keys, each)
+    for each in boxes[key]:
+        if each is None:
+            continue
+        if each not in keys and each < len(boxes):
+            keys.append(each)
+            getKeys(boxes, keys, each)
