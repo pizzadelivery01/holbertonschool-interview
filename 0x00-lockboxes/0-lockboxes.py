@@ -12,7 +12,7 @@ def canUnlockAll(boxes):
     """
     if boxes != []:
         keys = []
-        needed = [i[] for i in enumerate(boxes)]
+        needed = [i[0] for i in enumerate(boxes)]
 
         getKeys(boxes, keys)
 
