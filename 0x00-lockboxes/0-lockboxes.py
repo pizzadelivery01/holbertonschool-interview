@@ -31,5 +31,5 @@ def getKeys(boxes, keys, key=0):
     """
     for each in boxes[key]:
         if each not in keys and each < len(boxes):
-            keys.add(each)
+            keys.append(each)
             getKeys(boxes, keys, each)
