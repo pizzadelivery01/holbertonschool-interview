@@ -11,7 +11,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 	add_grids(grid1, grid2);
 	while (!stable_check(grid1))
 	{
-		print_grid(grid1);
+		print_g(grid1);
 		toppling(grid1);
 	}
 }
@@ -20,7 +20,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
  * @grid: grid
  * Return: void
  */
-void print_grid(int grid[3][3])
+void print_g(int grid[3][3])
 {
 	int i, j;
 
