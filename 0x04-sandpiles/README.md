@@ -1,1 +1,1 @@
-holberton school interview prep question solving sandpiles algorithm 
+holberton school interview prep question solving sandpiles algorithm
