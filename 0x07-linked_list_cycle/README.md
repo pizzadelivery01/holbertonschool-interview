@@ -1,0 +1,1 @@
+this is a holberton school interview prep question about a linked list and if it has a loop
