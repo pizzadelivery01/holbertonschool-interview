@@ -1,0 +1,1 @@
+Holberton schol interview prep question for year 2 checking utf8 charaters
