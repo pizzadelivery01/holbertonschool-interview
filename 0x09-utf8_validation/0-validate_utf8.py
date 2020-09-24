@@ -11,8 +11,7 @@ def validUTF8(data):
 
     # Number of bytes in the current UTF-8 character
     n_bytes = 0
-
-    
+ 
     for num in data:
 
         # Get the binary representation.
