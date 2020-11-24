@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+rain walls algo
+"""
 
 
 def rain(walls):
