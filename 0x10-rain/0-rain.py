@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 def rain(walls):
 
     result = 0
