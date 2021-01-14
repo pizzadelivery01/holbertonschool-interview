@@ -2,8 +2,7 @@
 #include <stdlib.h>
 
 /**
- * _multiply - multiply two strings of digits, with leading 0s truncated
- *
+ * _multiply - multiply two strings
  * @num1: first number
  * @len1: length of first number
  * @num2: second number
@@ -49,7 +48,7 @@ int _multiply(char num1[], long int len1, char num2[], long int len2)
 }
 
 /**
- * _err_return - write "Error" line and return 98
+ * _err_return - write "Error"
  *
  * Return: 98
  */
