@@ -4,12 +4,12 @@
 
 def makeChange(coins, total):
     """Returns the fewest number of coins needed to meet a given total
-	Args:
+    Args:
     coins: array of integers representing the coin values
     total: the total to find coins for
-	"""
+    """
 
-	if total <= 0:
+    if total <= 0:
         return 0
 
     array = [float('inf')] * (total + 1)
