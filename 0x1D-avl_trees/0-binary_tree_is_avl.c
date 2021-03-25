@@ -44,3 +44,4 @@ int binary_tree_is_avl(const binary_tree_t *tree)
 	if (!tree)
 		return (0);
 	return (is_binary_search_tree(tree, INT_MIN, INT_MAX, &height));
+}
