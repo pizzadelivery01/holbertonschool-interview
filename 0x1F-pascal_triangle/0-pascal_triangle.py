@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-"""returns a list of lists of integers representing the Pascal’s triangle of n"""
+"""returns integers representing the Pascal’s triangle of n"""
 
 
 def pascal_triangle(n):
-    """returns a list of lists of integers representing the Pascal’s triangle of n"""
+    """returns integers representing the Pascal’s triangle of n"""
     pascal = [[1]]
     for _ in range(n - 1):
         pascal += [[1] + [pascal[-1][i] + pascal[-1][i + 1]
