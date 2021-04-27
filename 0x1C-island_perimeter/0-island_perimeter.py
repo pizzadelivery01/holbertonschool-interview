@@ -6,6 +6,7 @@ Island Perimeter Algo
 
 def island_perimeter(grid):
     perimeter = 0
+    """ looks for water"""
     for row in range(len(grid)):
         for col in range(len(grid[row])):
             if grid[row][col] == 1:
