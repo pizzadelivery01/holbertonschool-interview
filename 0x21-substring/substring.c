@@ -20,7 +20,7 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 
 	if (!res || !count || !s || !words || !*words || !nb_words || !n)
 	{
-		return ();
+		return (NULL);
 	}
 	hashes = make_hash(words, nb_words);
 	str_len = strlen(s), len = strlen(words[0]), *n = 0;
