@@ -1,97 +1,128 @@
 #include "substring.h"
 
+#define INDEX(x) ((x) - 'a')
 
 /**
-* find_substring - finds all the possible substrings containing a list
-* of words, within a given string.
-* @s: string to check
-* @words: list of words
-* @nb_words: size of @words
-* @n: size of result array
-* Return: list of indecies where permutations start
-*/
+ * free_trie - frees all nodes of trie
+ * @root: pointer to root
+ */
+void free_trie(Tree *root)
+{
+	int i = 0;
+
+	for (i = 0; i < 26; i++)
+		if (root->children[i])
+			free_trie(root->children[i]);
+	free(root);
+}
+
+/**
+ * search_trie - searches trie for word
+ * @node: root of tree
+ * @str: string to find
+ * @k: characters of str to find
+ * @memmory: the memoization array
+ * @j: index in memmory
+ * Return: 1 if found else 0
+ */
+int search_trie(Tree *node, char *str, int k, Tree **memmory, int j)
+{
+	for (; k; str++, k--)
+	{
+		if (!node->children[INDEX(*str)])
+			return (0);
+		node = node->children[INDEX(*str)];
+	}
+
+	memmory[j] = node;
+	if (node->left-- > 0)
+	{
+		return (1);
+	}
+	return (0);
+}
+
+/**
+ * make_trie - fills trie with words
+ * @root: pointer to root of trie
+ * @words: pointer to array of words
+ * @nb_words: number of words
+ * @nodes: array of trie nodes to populate
+ */
+void make_trie(Tree *root, char const **words, int nb_words, Tree **nodes)
+{
+	int i = 0;
+	char const *str;
+	Tree *node;
+
+	for (i = 0; i < nb_words; i++)
+	{
+		node = root;
+		for (str = words[i]; *str; str++)
+		{
+			if (!node->children[INDEX(*str)])
+			{
+				node->children[INDEX(*str)] = calloc(1, sizeof(Tree));
+				if (!node->children[INDEX(*str)])
+					exit(1);
+			}
+			node = node->children[INDEX(*str)];
+		}
+		node->word = 1;
+		node->count++;
+		node->left++;
+		node->val = (char *)words[i];
+		nodes[i] = node;
+	}
+}
+/**
+ * find_substring - finds substring composed of all concatenated words
+ * @s: the string to search
+ * @words: array of contentated words to find
+ * @nb_words: the size of passed array
+ * @n: size of return array, to set
+ * Return: array of indexes where all words found
+ */
 int *find_substring(char const *s, char const **words, int nb_words, int *n)
 {
-	int len, str_len, cnt;
-	int *res = calloc(1000, sizeof(*res));
-	int *count = malloc(nb_words * sizeof(*count));
-	int i, j, k;
-	unsigned long *hashes, hash_val;
+	int i = 0, j, k, lenstr, matches;
+	Tree *root, **nodes, **memmory;
+	int *indexes;
 
-	if (!res || !count || !s || !words || !*words || !nb_words || !n)
+	*n = 0;
+	lenstr = strlen(s);
+	k = strlen(words[0]);
+	indexes = calloc(lenstr, sizeof(int));
+	root = calloc(1, sizeof(Tree));
+	nodes = calloc(nb_words, sizeof(*nodes));
+	memmory = calloc(lenstr, sizeof(*memmory));
+	if (!indexes || !root || !nodes || !memmory)
+		exit(1);
+	make_trie(root, words, nb_words, nodes);
+
+	for (i = 0; i < lenstr; i++)
 	{
-		return (NULL);
-	}
-	hashes = make_hash(words, nb_words);
-	str_len = strlen(s), len = strlen(words[0]), *n = 0;
-	for (i = 0; i <= str_len - nb_words * len; ++i)
-	{
-		memset(count, 0, nb_words * sizeof(*count));
-		cnt = 0;
-		for (j = 0; j < nb_words; ++j)
+		matches = 0;
+		for (j = i; j <= lenstr - k; j += k)
 		{
-			hash_val = hash(s + i + j * len, len);
-			for (k = 0; k < nb_words; ++k)
+			if ((memmory[j] && memmory[j]->left-- > 0) ||
+				search_trie(root, (char *)s + j, k, memmory, j))
 			{
-				if (count[k] == 1)
-					continue;
-				if (hashes[k] == hash_val && !strncmp(s + i + j * len, words[k], len))
+				if (++matches == nb_words)
 				{
-					count[k] = 1;
-					++cnt;
+					indexes[*n] = i;
+					*n += 1;
 					break;
 				}
 			}
+			else
+				break;
 		}
-		if (cnt == nb_words)
-		{
-			res[*n] = i;
-			*n += 1;
-		}
+		for (j = 0; j < nb_words; j++)
+			nodes[j]->left = nodes[j]->count;
 	}
-	free(count), free(hashes);
-	return (res);
-}
-
-/**
-* hash - hash function
-* @s: string to hash
-* @end: end index of @s
-* Return: hash val of @s
-*/
-unsigned long hash(const char *s, int end)
-{
-	const int p = 31;
-	const int m = 1e9 + 9;
-	int i;
-	unsigned long hash_value = 0;
-	unsigned long p_pow = 1;
-
-	for (i = 0; i < end; ++i)
-	{
-		hash_value = (hash_value + (s[i] - 'a' + 1) * p_pow) % m;
-		p_pow = (p_pow * p) % m;
-	}
-	return (hash_value);
-}
-/**
-* make_hash - create a array of hashes from @words
-* @words: list of words
-* @nb_words: size of @words
-* Return: list of hashes
-*/
-unsigned long *make_hash(char const **words, int nb_words)
-{
-	unsigned long *hashes = calloc(nb_words, sizeof(*hashes));
-	int i;
-
-	if (!hashes)
-	{
-		exit(1);
-	}
-	for (i = 0; i < nb_words; ++i)
-	{
-		hashes[i] = hash(words[i], strlen(words[i]));
-	}
-	return (hashes);
+	free_trie(root), free(nodes), free(memmory);
+	if (*n == 0)
+		indexes = (free(indexes), NULL);
+	return (indexes);
 }
